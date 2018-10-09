@@ -9,8 +9,7 @@ var ObjectId = Schema.ObjectId;
 var BeerSchema = new Schema({
   _id: {
     type: String,
-    required: 'Please give a short name, i.e, laguIPA or hein.'
-    //unique: true
+    required: 'Please give a short name, i.e, laguIPA or hein.',
   },
   name: {
     type: String,
@@ -20,11 +19,14 @@ var BeerSchema = new Schema({
 
   brewery: {
     type: String,
+    required: 'Please insert a brewery...',
+    unique: false
   },
 
   origin: {
     type: String,
-    required: 'Please give us the country, region, or state of origin.'
+    required: 'Please give us the country, region, or state of origin.',
+    unique: false
   },
 
   beer_type: {
@@ -120,6 +122,7 @@ var BeerSchema = new Schema({
       'Woody',
       'Nutty',
       'Earthy',
+      'Sweet',
       'Peaty',
       'Sulfuric',
       'Zesty',

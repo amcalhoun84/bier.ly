@@ -4,14 +4,18 @@ const express = require('express'),
   app = express(),
   mongoose = require('mongoose'),
   http = require('http'),
+  path = require('path'),
   bodyParser = require('body-parser'),
   sha256 = require('sha256'),
   logger = require('morgan'),
   cors = require('cors'),
-  port = process.env.PORT || 3000;
+  port = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/BierlyDB');
+mongoose.connect('mongodb://localhost:27017/BierlyDB');
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/bierly/public'));
 
 app.use(bodyParser.urlencoded({ extended: 'true' }));
 app.use(bodyParser.json());
@@ -26,12 +30,16 @@ app.use((req, res, next) => {
   next();
 });
 
+/* app.get('/api/backendCheck', (req, res) => {
+  res.send({ express: 'Hello, world! Bier.ly is forming nicely!' });
+  console.log(express);
+}); */
+
 const routes = require('./api/api');
 routes(app);
 
-app.listen(port);
-console.log(`Connection oppened at port: ${port}`);
-console.log("Press Ctrl/Cmd+C to terminate application.");
+app.listen(port, () =>
+  console.log(`Connection oppened at port: ${port}\nPress Ctrl/Cmd+C to terminate application.`));
 
 function normalizePort(val) {
   let port = parseInt(val, 10);
