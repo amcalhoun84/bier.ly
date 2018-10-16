@@ -1,5 +1,7 @@
 'use strict';
 
+const express = require('express');
+
 module.exports = (app) => {
   const beerRoute = require('./routes/beerRoute'),
     userRoute = require('./routes/userRoute'),
@@ -7,8 +9,8 @@ module.exports = (app) => {
 
   // API Hooks for beers
 
-  app.get('/', (req, res) => {
-    res.json({ 'message': 'Hello, world! Bier.ly is forming nicely!' });
+  app.get('/api/backendCheck', (req, res) => {
+    res.send({ express: 'Don\'t cry wolf, but definitely check it out! Express is connected to REACT!' });
   });
 
   app.route('/api/beer/')
