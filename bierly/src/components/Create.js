@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 // import ReactDOM from 'react-dom'; // Not used here, so it throws errors.
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import MultiSelectReact from 'multi-select-react';
 
 class Create extends Component {
 
   constructor() {
     super();
     this.state = {
-      _id: null,    // I really need to figure out what to do with this.
+      _id: '',    // I really need to figure out what to do with this.
       name: '',
       brewery: '',
       origin: '',
@@ -23,22 +24,29 @@ class Create extends Component {
   onChange = (e) => {
     const state = this.state;
     state[e.target.name] = e.target.value;
+
     this.setState(state);
+
   }
 
   onSubmit = (e) => {
     e.preventDefault();
 
-    const { _id, name, brewery, origin, beer_type, notes, intensity, description, pairs_with } = this.state;
 
-    let _new_id = name.trim();
-    _new_id = _new_id.replace(/\s/g, '');
+    const { name, brewery, origin, beer_type, notes, intensity, description, pairs_with } = this.state;
 
-    this.setState({ _id: _new_id });
+    //    let _new_id = name.trim().replace(/\ /g, '').replace(/[^0-9a-zA-Z].to/g, '').toLowerCase();
+    //  console.log("new id", _new_id);
 
-    axios.post('/api/beer'), { _id, name, brewery, origin, beer_type, notes, intensity, description, pairs_with }
+    //    this.setState({ _id: _new_id });
+
+    //  console.log(this.state);
+
+
+
+    axios.post('/api/beer', { name, brewery, origin, beer_type, notes, intensity, description, pairs_with })
       .then((result) => {
-        this.props.drinks.push;
+        this.props.history.push('/');
       });
   }
 
@@ -50,13 +58,20 @@ class Create extends Component {
         <h4><Link to='/'>Return to Beers</Link></h4>
         <form onSubmit={this.onSubmit}>
           <div class="form-group">
+            <h2> Beer Name </h2>
             <input type="text" class="form-control" name="name" value={name} onChange={this.onChange} placeholder="Beer Name" />
           </div>
           <div class="form-group">
+            <h2>Brewery Name </h2>
             <input type="text" class="form-control" name="brewery" value={brewery} onChange={this.onChange} placeholder="Brewery Name" />
           </div>
           <div class="form-group">
-            <select class="form-control" name="Beer Type" value={beer_type} onChange={this.onChange}>
+            <h2>Origin</h2>
+            <input type="text" class="form-control" name="origin" value={origin} onChange={this.onChange} placeholder="Origin" />
+          </div>
+          <div class="form-group">
+            <h2>Beer Type</h2>
+            <select class="form-control" name="beer_type" value={beer_type} onChange={this.onChange}>
               <option>Select a beer type...</option>
               <option value='Ale'>Ale</option>
               <option value='Lager'>Lager</option>
@@ -122,8 +137,8 @@ class Create extends Component {
             </select>
           </div>
           <div class="form-group">
-            <select class="form-control" name="notes" value={notes} onChange={this.onChange}>
-              <option>Select notes...</option> {/* integrate select multiple */}
+            <h2>Notes</h2>
+            <select multiple={true} class="form-control" name="notes" value={[notes]} onChange={this.onChange}>
               <option value='Roasted'>Roasted</option>
               <option value='Bready'>Bready</option>
               <option value='Bitter'>Bitter</option>
@@ -155,8 +170,8 @@ class Create extends Component {
             </select>
           </div>
           <div class="form-group">
-            <select class="form-control" name="intensity" value={intensity} onChange={this.onChange} placeholder="Intensity Types">
-              <option value=''>Intensity Notes...</option>
+            <h2>Intensity</h2>
+            <select multiple={true} class="form-control" name="intensity" value={intensity} onChange={this.onChange} placeholder="Intensity Types">
               <option value='Assertive'>Assertive</option>
               <option value='Accessible'>Accessible</option>
               <option value='Bold'>Bold</option>
@@ -179,12 +194,13 @@ class Create extends Component {
             </select>
           </div>
           <div class="form-group">
-            <textarea class="form-control" name="Description" value={beer_type} onChange={this.onChange}>
+            <h2>Description</h2>
+            <textarea class="form-control" name="description" value={description} onChange={this.onChange}>
             </textarea>
           </div>
           <div class="form-group">
-            <select class="form-control" name="intensity" value={intensity} onChange={this.onChange} placeholder="Pairing">
-              <option value=''></option>
+            <h2>Pairing</h2>
+            <select multiple={true} class="form-control" name="pairs_with" value={pairs_with} onChange={this.onChange} placeholder="Pairs With">
               <option value='Red Meat'>Red Meat</option>
               <option value='Pork'>Pork</option>
               <option value='Cured Meat'>Cured Meat</option>
@@ -216,6 +232,7 @@ class Create extends Component {
               <option value='Baking Spice'>Baking Spice</option>
             </select>
           </div>
+          <button type="submit" class="">Submit</button>
         </form >
       </div >
 

@@ -7,10 +7,10 @@ var ObjectId = Schema.ObjectId;
 
 
 var BeerSchema = new Schema({
-  _id: {
-    type: String,
-    required: 'Please give a short name, i.e, laguIPA or hein.',
-  },
+  /*   _id: {
+      type: String,
+      required: 'Please give a short name, i.e, laguIPA or hein.',
+    }, */
   name: {
     type: String,
     require: 'Please give it\'s proper name. I.e, \'Bud Light\', \'Heinikein\', \'Lagunitas Lil\' Sumthin\' Sumthin\'.',

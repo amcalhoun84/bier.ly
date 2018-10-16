@@ -8,11 +8,7 @@ const mongoose = require('mongoose'),
 exports.list_beers = (req, res) => {
   Beer.find({}, (err, beer) => {
     if (err) ErrHandle.errorEncountered(err);
-    res.send(beer);
-    console.log();
-    for (let i = 0; i < beer.length; i++) {
-      console.log("Beer: ", beer[i].name);
-    }
+    res.json(beer);
   });
 };
 
@@ -53,9 +49,13 @@ exports.update_beer_by_name = (req, res) => {
 };
 
 exports.beer_pairs_with_food = (req, res) => {
-  Beer.find({}, (err, beer) => {
+  console.log(req.params.beerType);
+  Beer.find({ 'beer_type': req.params.beerType }, (err, beer) => {
     if (err) ErrHandle.errorEncountered(res, err);
-    res.json(beer);
+    Food.find({ 'pairs_with': req.params.beerType }, (err, food) => {
+      if (food) console.log(food)
+      res.json(food);
+    });
   });
 
 };

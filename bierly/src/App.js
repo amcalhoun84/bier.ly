@@ -52,7 +52,7 @@ class App extends Component {
           This is the fresh start to Bier.ly. Super cool stuff is coming soon!
 
           <hr />
-          <Link to="/api/beer/create">Add a beer...</Link>
+          <Link to="/create">Add a beer...</Link>
 
           <h3> Current Beers on Tap </h3>
           <table class="beer_table">
